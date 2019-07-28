@@ -3418,6 +3418,7 @@ blockquote small {
   background-attachment: fixed;
   font-weight: 300;
   color: #9395a5;
+  background-image: url('img/amalia-image-footer.jpg');
 }
 .footer > *,
 .footer * {
