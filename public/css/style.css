@@ -995,7 +995,8 @@ blockquote small {
   width: 100%;
   min-height: 100px;
   padding: 15px 0;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
+  background-image: url("https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fimg2.wikia.nocookie.net%2F__cb20130401203147%2Fboundlessuniverserp%2Fimages%2Ff%2Ff8%2FPurple-square.jpg");
 }
 .header .site-title {
   display: inline-block;
@@ -3418,7 +3419,7 @@ blockquote small {
   background-attachment: fixed;
   font-weight: 300;
   color: #9395a5;
-  background-image: url('img/amalia-image-footer.jpg');
+  background-image: url('https://proxy.duckduckgo.com/iu/?u=http%3A%2F%2Fclearmindarts.com%2Fwp-content%2Fuploads%2F2015%2F05%2Fbluesquare1.jpg&f=1');
 }
 .footer > *,
 .footer * {
