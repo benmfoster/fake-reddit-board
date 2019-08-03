@@ -7,7 +7,28 @@ class App extends React.Component {
     super(props)
     const boardPosts = [];
     const user = {};
-    this.state = { boardPosts, user };
+    this.state = { boardPosts, user, value: '' };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+}
+
+handleChange(event) {
+  this.setState({value: event.target.value});
+}
+
+handleSubmit(event) {
+  alert('Congratlations:' + this.state.value);
+  event.preventDefault();
+  var params = {
+    text: this.state.value,
+    user_id: localStorage.getItem('current_user_id')
+  }
+  Axios.post('http://localhost:3000/api/board_posts', params).then(response => {
+    console.log("Success!", response.data);
+  }).catch(error => {
+    this.errors = error.response.data.errors;
+    this.status = error.response.status;
+  });
 }
 
 async componentDidMount() {
@@ -109,6 +130,13 @@ async componentDidMount() {
             
             <div class="col-md-8 col-md-offset-2">
               <div class="row">
+              <form onSubmit={this.handleSubmit}>
+                <label>
+                  Name:
+                  <textarea value={this.state.value} onChange={this.handleChange} />
+                </label>
+                <input type="submit" value="Submit" />
+              </form>
 
                 
                         {this.state.boardPosts.map((boardPost) => (
