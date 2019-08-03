@@ -37,7 +37,7 @@ async componentDidMount() {
     Axios.get('http://localhost:3000/api/users/' + localStorage.getItem('current_user_id'))
   ])
   this.setState({
-    boardPosts: firstResponse.data,
+    boardPosts: firstResponse.data.reverse(),
     user: secondResponse.data,
   });
   console.log(this.state.user)
