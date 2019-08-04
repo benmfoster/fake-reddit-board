@@ -10,6 +10,7 @@ class App extends React.Component {
     this.state = { boardPosts, user, value: '' };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.deleteBoardPost = this.deleteBoardPost.bind(this);
 }
 
 handleChange(event) {
@@ -17,7 +18,7 @@ handleChange(event) {
 }
 
 handleSubmit(event) {
-  alert('Congratlations:' + this.state.value);
+  console.log('Congratlations:' + this.state.value);
   event.preventDefault();
   var params = {
     text: this.state.value,
@@ -29,6 +30,24 @@ handleSubmit(event) {
     this.errors = error.response.data.errors;
     this.status = error.response.status;
   });
+}
+
+deleteBoardPost(post) {
+  Axios.delete('http://localhost:3000/api/board_posts/' + post.id).then(response => {
+    console.log("Success!", response.data);
+    // this.boardPosts[i].isDeleted = true;
+  });
+}
+
+deleteButton(post) {
+  if(localStorage.getItem('current_user_id') == post.user_id) {
+    return (<div class="news-footer">
+    <button value="Delete" class="btn btn-danger"
+    onClick={() => { this.deleteBoardPost(post) }} />
+    </div>);
+  } else {
+    return null;
+  }
 }
 
 async componentDidMount() {
@@ -131,11 +150,10 @@ async componentDidMount() {
             <div class="col-md-8 col-md-offset-2">
               <div class="row">
               <form onSubmit={this.handleSubmit}>
-                <label>
-                  Name:
-                  <textarea value={this.state.value} onChange={this.handleChange} />
-                </label>
-                <input type="submit" value="Submit" />
+                  <textarea type="text" class="input-lg form-control" rows="10" placeholder="Consume the internet. " value={this.state.value} onChange={this.handleChange} />
+                  <div class="news-footer">
+                <input type="submit" value="Submit" class="btn btn-primary btn-lg" />
+                </div>
               </form>
 
                 
@@ -153,6 +171,7 @@ async componentDidMount() {
                                     <p>{boardPost.text}</p>
                                   </div>
                               </div>
+                              {this.deleteButton(boardPost)}            
                             </article>
                           </div>
                         ))}
