@@ -7,7 +7,8 @@ class App extends React.Component {
     super(props)
     const boardPosts = [];
     const user = {};
-    this.state = { boardPosts, user, value: '' };
+    const newBoardPost = {};
+    this.state = { boardPosts, user, newBoardPost, value: '' };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.deleteBoardPost = this.deleteBoardPost.bind(this);
@@ -26,24 +27,27 @@ handleSubmit(event) {
   }
   Axios.post('http://localhost:3000/api/board_posts', params).then(response => {
     console.log("Success!", response.data);
+    this.setState({newBoardPost: response.data});
   }).catch(error => {
     this.errors = error.response.data.errors;
     this.status = error.response.status;
   });
 }
 
-deleteBoardPost(post) {
+deleteBoardPost(post, i) {
   Axios.delete('http://localhost:3000/api/board_posts/' + post.id).then(response => {
     console.log("Success!", response.data);
-    // this.boardPosts[i].isDeleted = true;
+    let arr = this.state.boardPosts;
+    arr.splice(i, 1);
+    this.setState({boardPosts: arr});
   });
 }
 
-deleteButton(post) {
+deleteButton(post, i) {
   if(localStorage.getItem('current_user_id') == post.user_id) {
     return (<div class="news-footer">
     <button value="Delete" class="btn btn-danger"
-    onClick={() => { this.deleteBoardPost(post) }} />
+    onClick={() => { this.deleteBoardPost(post, i) }} />
     </div>);
   } else {
     return null;
@@ -156,34 +160,53 @@ async componentDidMount() {
                 </div>
               </form>
 
-                
-                        {this.state.boardPosts.map((boardPost) => (
-                          <div class="col-md-12">
-                            <article class="post">
-                              <div class="news-container">
-                              <span class="news-category">
-                                  <a href={'https://sleepy-dawn-59018.herokuapp.com/users/' + boardPost.user_id}>       
-                                    {boardPost.authored_by} 
-                                  </a>
-                              </span>
-                                <span class="news-date">{boardPost.created_at}</span>
-                                  <div class="news-entry">
-                                    <p>{boardPost.text}</p>
-                                  </div>
-                              </div>
-                              {this.deleteButton(boardPost)}            
-                            </article>
+              
+                  <div class="col-md-12">
+                    <article class="post">
+                      <div class="news-container">
+                      <span class="news-category">
+                          <a href={'https://sleepy-dawn-59018.herokuapp.com/users/' + this.state.newBoardPost.user_id}>       
+                            {this.state.newBoardPost.authored_by} 
+                          </a>
+                      </span>
+                        <span class="news-date">{this.state.newBoardPost.created_at}</span>
+                          <div class="news-entry">
+                            <p>{this.state.newBoardPost.text}</p>
                           </div>
-                        ))}
                       </div>
-                      
-
+                      {this.deleteButton(this.state.newBoardPost)}            
+                    </article>
+                  </div>
+                
+                {this.state.boardPosts.map((boardPost, i) => (
+                  <div class="col-md-12">
+                    <article class="post">
+                      <div class="news-container">
+                      <span class="news-category">
+                          <a href={'https://sleepy-dawn-59018.herokuapp.com/users/' + boardPost.user_id}>       
+                            {boardPost.authored_by} 
+                          </a>
+                      </span>
+                        <span class="news-date">{boardPost.created_at}</span>
+                          <div class="news-entry">
+                            <p>{boardPost.text}</p>
+                          </div>
+                      </div>
+                      {this.deleteButton(boardPost, i)}            
+                    </article>
+                  </div>
+                ))}
+              
               </div>
             </div>
 
           </div>
         </div>
       </div>
+
+    </div>
+
+
       <div class="footer">
         <div class="container">
           <div class="row">
