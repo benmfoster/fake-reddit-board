@@ -8,21 +8,25 @@ class App extends React.Component {
     const boardPosts = [];
     const user = {};
     const newBoardPost = {};
-    this.state = { boardPosts, user, newBoardPost, value: '' };
+    const email = '';
+    const password = '';
+    const boardPostText = '';
+    this.state = { email, password, boardPosts, user, newBoardPost, boardPostText };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLogin = this.handleLogin.bind(this);
     this.deleteBoardPost = this.deleteBoardPost.bind(this);
 }
 
 handleChange(event) {
-  this.setState({value: event.target.value});
+  const name = event.target.name;
+  this.setState({[name]: event.target.value});
 }
 
 handleSubmit(event) {
-  console.log(this.state.value);
   event.preventDefault();
   var params = {
-    text: this.state.value,
+    text: this.state.boardPostText,
     user_id: localStorage.getItem('current_user_id')
   }
   Axios.post('https://sleepy-dawn-59018.herokuapp.com/api/board_posts', params).then(response => {
@@ -32,6 +36,27 @@ handleSubmit(event) {
     this.errors = error.response.data.errors;
     this.status = error.response.status;
   });
+}
+
+handleLogin(event) {
+  event.preventDefault();
+  var params = {
+    email: this.state.email,
+    password: this.state.password
+  };
+  Axios.post("http://localhost:3000/api/sessions", params).then(response => {
+            Axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
+            localStorage.setItem("jwt", response.data.jwt);
+            localStorage.setItem("current_user_id", response.data.user_id);
+            if(response.data.user_id == true) {
+              console.log("success!")
+              return (
+                <button>Enter</button>
+              )
+            } else {
+              console.log('login invalid');
+            }
+          })
 }
 
 deleteBoardPost(post, i) {
@@ -63,12 +88,54 @@ async componentDidMount() {
     boardPosts: firstResponse.data.reverse(),
     user: secondResponse.data,
   });
-  console.log(this.state.user)
+  console.log(this.state.boardPosts);
  }
 
 
   render() {
-     return (<div className="App">
+    if(!(localStorage.getItem('jwt'))) {
+      return (
+        <div>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+          Login to Fake Reddit Board
+        </button>
+        
+      
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalCenterTitle">Login</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+              <div class="login">
+    <div class="container">
+      <form onSubmit={this.handleLogin}>
+        <div class="form-group" onSubmit={this.handleLogin}>
+          <label>Email:</label>
+          <input type="email" class="form-control" placeholder="email." name="email" value={this.state.email} onChange={this.handleChange} />
+        </div>
+        <div class="form-group">
+          <label>Password:</label>
+          <input type="password" class="form-control" placeholder="password." name="password" value={this.state.password} onChange={this.handleChange} />
+        </div>
+        <input type="submit" class="btn btn-primary" value="Submit"/>
+      </form>
+    </div>
+  </div>
+              </div>
+              <div class="modal-footer">
+                <a href="https://sleepy-dawn-59018.herokuapp.com"><button type="button" class="btn btn-secondary" data-dismiss="modal">Back to Fake Reddit</button></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>)
+    } else {
+       return (<div className="App">
         <div id="app">
       <div class="site-main">
 
@@ -154,7 +221,7 @@ async componentDidMount() {
             <div class="col-md-8 col-md-offset-2">
               <div class="row">
               <form onSubmit={this.handleSubmit}>
-                  <textarea type="text" class="input-lg form-control" rows="10" placeholder="Consume the internet. " value={this.state.value} onChange={this.handleChange} />
+                  <textarea type="text" class="input-lg form-control" rows="10" placeholder="Consume the internet. " name="boardPostText" value={this.state.boardPostText} onChange={this.handleChange} />
                   <div class="news-footer">
                 <input type="submit" value="Submit" class="btn btn-primary btn-lg" />
                 </div>
@@ -224,7 +291,7 @@ async componentDidMount() {
       {/* <!-- .footer --> */}
     </div>
       </div>
-  )
+  )}
       }
     }
 
