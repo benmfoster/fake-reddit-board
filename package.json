@@ -18,6 +18,9 @@
     "node": "11.14.0",
     "npm": "6.9.0"
   },
+  "proxy": {
+    "https://sleepy-dawn-59018.herokuapp.com/"
+  },
   "eslintConfig": {
     "extends": "react-app"
   },

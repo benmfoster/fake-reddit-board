@@ -25,7 +25,7 @@ handleSubmit(event) {
     text: this.state.value,
     user_id: localStorage.getItem('current_user_id')
   }
-  Axios.post('https://sleepy-dawn-59018.herokuapp.com/api/board_posts', params).then(response => {
+  Axios.post('api/board_posts', params).then(response => {
     console.log("Success!", response.data);
     this.setState({newBoardPost: response.data});
   }).catch(error => {
@@ -35,7 +35,7 @@ handleSubmit(event) {
 }
 
 deleteBoardPost(post, i) {
-  Axios.delete('https://sleepy-dawn-59018.herokuapp.com/api/board_posts/' + post.id).then(response => {
+  Axios.delete('api/board_posts/' + post.id).then(response => {
     console.log("Success!", response.data);
     let arr = this.state.boardPosts;
     arr.splice(i, 1);
@@ -56,8 +56,8 @@ deleteButton(post, i) {
 
 async componentDidMount() {
   const [firstResponse, secondResponse] = await Promise.all([
-    Axios.get('https://sleepy-dawn-59018.herokuapp.com/api/board_posts'),
-    Axios.get('https://sleepy-dawn-59018.herokuapp.com/api/users/' + localStorage.getItem('current_user_id'))
+    Axios.get('api/board_posts'),
+    Axios.get('api/users/' + localStorage.getItem('current_user_id'))
   ])
   this.setState({
     boardPosts: firstResponse.data.reverse(),
