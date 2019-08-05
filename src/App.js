@@ -127,7 +127,7 @@ login() {
   </div>
               </div>
               <div class="modal-footer">
-                <a href="https://sleepy-dawn-59018.herokuapp.com"><button type="button" class="btn btn-secondary" data-dismiss="modal">Back to Fake Reddit</button></a>
+                <a href="https://sleepy-dawn-59018.herokuapp.com"><button type="button" class="btn btn-secondary" data-dismiss="modal">Back to Fake Reddit (Signup)</button></a>
               </div>
             </div>
           </div>
