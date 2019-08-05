@@ -100,15 +100,11 @@ displayNewBoardPosts() {
 
 login() {
   return (
-    <div>
-        
-        
-      
-       
+    <div>  
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalCenterTitle">Login</h5>
+                <h5 class="modal-title" id="exampleModalCenterTitle">Fake Reddit Board 👑 Login</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
@@ -233,7 +229,7 @@ fetch() {
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Github <span class="caret"></span></a>
             <ul class="dropdown-menu">
-              <li><a href="https://github.com/benmfoster/fake_reddit_board">Frontend Repository (React.js)</a></li>
+              <li><a href="https://github.com/benmfoster/fake-reddit-board">Frontend Repository (React.js)</a></li>
               <li><a href="https://github.com/benmfoster/fake_reddit">Backend Repository (Ruby on Rails)</a></li>
             </ul>
           </li> 
