@@ -234,10 +234,8 @@ fetch() {
       {/* <!-- Collect the nav links, forms, and other content for toggling --> */}
       <div class="collapse navbar-collapse" id="amalia-navbar-collapse">
         <ul class="nav navbar-nav">
-          <div >
             <li class={(this.state.isGuest ? 'hidden' : 'cta')}><a href={'https://sleepy-dawn-59018.herokuapp.com/users/' + this.state.user.id}>My Profile</a></li>
-            <li class={(this.state.isGuest ? 'hidden' : 'cta')}><a href="https://sleepy-dawn-59018.herokuapp.com/logout" onClick={() => { this.logout() }}>Logout</a></li>
-          </div>
+            <li class={(this.state.isGuest ? 'hidden' : 'cta')} onClick={() => { this.logout() }}><a href="https://sleepy-dawn-59018.herokuapp.com/logout">Logout</a></li>
           <li class={(this.state.isGuest ? 'cta' : 'hidden')} onClick={() => { this.setState({ isGuest: false }) }}><a href='/'>Login</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Github <span class="caret"></span></a>
