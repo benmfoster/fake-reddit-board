@@ -81,7 +81,8 @@ displayNewBoardPosts() {
           <article class="post">
             <div class="news-container">
             <span class="news-category">
-                <a href={'https://sleepy-dawn-59018.herokuapp.com/users/' + boardPost.user_id}>       
+                <a href={'https://sleepy-dawn-59018.herokuapp.com/users/' + boardPost.user_id}> 
+                <img src={boardPost.user_picture} class="author-image" alt="" /><br />        
                   {boardPost.authored_by} 
                 </a>
             </span>
@@ -263,10 +264,15 @@ fetch() {
                 <article class="post">
                   <div class="news-container">
                   <span class="news-category">
-                      <a href={'https://sleepy-dawn-59018.herokuapp.com/users/' + boardPost.user_id}>       
+                    
+                      <a href={'https://sleepy-dawn-59018.herokuapp.com/users/' + boardPost.user_id}>
+                        
+                      <img src={boardPost.user_picture} class="author-image" alt="" /><br />  
                         {boardPost.authored_by} 
                       </a>
+  
                   </span>
+                  <br />
                     <span class="news-date">{boardPost.created_at}</span>
                       <div class="news-entry">
                         <p>{boardPost.text}</p>
