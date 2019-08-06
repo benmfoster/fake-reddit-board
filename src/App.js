@@ -11,8 +11,9 @@ class App extends React.Component {
     const email = '';
     const password = '';
     const boardPostText = '';
-    const isLoggedIn = false
-    this.state = { email, password, boardPosts, user, newBoardPosts, boardPostText, isLoggedIn };
+    const isLoggedIn = false;
+    const isGuest = false;
+    this.state = { email, password, boardPosts, user, newBoardPosts, boardPostText, isLoggedIn, isGuest };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
@@ -99,6 +100,11 @@ displayNewBoardPosts() {
   }
 }
 
+continueAnyway() {
+  this.setState({isLoggedIn: true, isGuest: true})
+  this.fetch();
+}
+
 login() {
   return (
     <div>  
@@ -129,6 +135,7 @@ login() {
               </div>
               <div class="modal-footer">
                 <a href="https://sleepy-dawn-59018.herokuapp.com"><button type="button" class="btn btn-secondary" data-dismiss="modal">Back to Fake Reddit (Signup)</button></a>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => { this.continueAnyway() }}>Continue Anway</button>
               </div>
             </div>
           </div>
@@ -156,11 +163,13 @@ fetch() {
       boardPosts: response.data.reverse(),
     });  
  });
-  Axios.get('https://sleepy-dawn-59018.herokuapp.com/api/users/' + localStorage.getItem('current_user_id')).then(response => {
-    this.setState({
-      user: response.data,
+  if(this.state.isLoggedin == true && this.state.isGuest == false) {
+    Axios.get('https://sleepy-dawn-59018.herokuapp.com/api/users/' + localStorage.getItem('current_user_id')).then(response => {
+      this.setState({
+        user: response.data,
+      });
     });
- });
+  }
  }
 
  mainPage() {
@@ -225,8 +234,11 @@ fetch() {
       {/* <!-- Collect the nav links, forms, and other content for toggling --> */}
       <div class="collapse navbar-collapse" id="amalia-navbar-collapse">
         <ul class="nav navbar-nav">
-          <li class="cta"><a href={'https://sleepy-dawn-59018.herokuapp.com/users/' + this.state.user.id}>My Profile</a></li>
-          <li class="cta"><a href="https://sleepy-dawn-59018.herokuapp.com/logout" onClick={() => { this.logout() }}>Logout</a></li>
+          <div class={(this.state.isGuest ? 'hidden' : '')}>
+            <li class="cta"><a href={'https://sleepy-dawn-59018.herokuapp.com/users/' + this.state.user.id}>My Profile</a></li>
+            <li class="cta"><a href="https://sleepy-dawn-59018.herokuapp.com/logout" onClick={() => { this.logout() }}>Logout</a></li>
+          </div>
+          <li class={(this.state.isGuest ? 'cta' : 'hidden')} onClick={() => { this.setState({ isGuest: false }) }}><a href='/'>Login</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Github <span class="caret"></span></a>
             <ul class="dropdown-menu">
@@ -315,14 +327,14 @@ fetch() {
 
 
   render() {
-    if(this.state.isLoggedIn) {
+    if(this.state.isLoggedIn || this.state.isGuest) {
       return this.mainPage();
     } else {
       return this.login();
     }
-        }
+  }
 
-        }
+}
     
 
 export default App;
