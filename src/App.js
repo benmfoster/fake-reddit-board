@@ -134,7 +134,7 @@ login() {
   </div>
               </div>
               <div class="modal-footer">
-                <a href="https://sleepy-dawn-59018.herokuapp.com"><button type="button" class="btn btn-secondary" data-dismiss="modal">Back to Fake Reddit (Signup)</button></a>
+                <a href="https://sleepy-dawn-59018.herokuapp.com"><button type="button" class="btn btn-secondary" data-dismiss="modal">Back to Fake Reddit (Signup)</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => { this.continueAnyway() }}>Continue Anway</button>
               </div>
             </div>
@@ -184,7 +184,7 @@ fetch() {
       <div class="row">
         <div class="col-sm-6">
           <ul class="social-icon">
-            <li><a href="/">👑</a></li>
+            <li class="hvr-wobble-vertical"><a href="/">👑</a></li>
           </ul>
         </div>
 
@@ -205,8 +205,7 @@ fetch() {
       <div class="row">
 
         <div class="col-sm-12">
-          <h1 class="site-title"><a href="/">Fake Reddit 📍 board</a><span>. exclusive </span> 🐋</h1>
-          <p class="site-description">Members-only pillorying topics of social interest.</p>
+          <h1 class="site-title"><a href="/">Fake Reddit <span class="hvr-wobble-vertical">📍</span> board</a><span>.</span> <span class="hvr-wobble-vertical">🐋</span></h1>
         </div>
         {/* <!-- .col-sm-6 --> */}
 
