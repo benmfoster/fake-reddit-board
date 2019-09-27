@@ -31,7 +31,7 @@ handleSubmit(event) {
     text: this.state.boardPostText,
     user_id: localStorage.getItem('current_user_id')
   }
-  Axios.post('https://sleepy-dawn-59018.herokuapp.com/api/board_posts', params).then(response => {
+  Axios.post('https://fake-reddit-app.herokuapp.com/api/board_posts', params).then(response => {
     console.log("Success!", response.data);
     const posts = this.state.newBoardPosts;
     posts.unshift(response.data);
@@ -45,7 +45,7 @@ handleLogin(event) {
     email: this.state.email,
     password: this.state.password
   };
-  Axios.post("https://sleepy-dawn-59018.herokuapp.com/api/sessions", params).then(response => {
+  Axios.post("https://fake-reddit-app.herokuapp.com/api/sessions", params).then(response => {
             Axios.defaults.headers.common["Authorization"] = "Bearer " + response.data.jwt;
             localStorage.setItem('jwt', response.data.jwt);
             localStorage.setItem('current_user_id', response.data.user_id);
@@ -55,7 +55,7 @@ handleLogin(event) {
 }
 
 deleteBoardPost(post, i) {
-  Axios.delete('https://sleepy-dawn-59018.herokuapp.com/api/board_posts/' + post.id).then(response => {
+  Axios.delete('https://fake-reddit-app.herokuapp.com/api/board_posts/' + post.id).then(response => {
     console.log("Success!", response.data);
     let arr = this.state.boardPosts;
     arr.splice(i, 1);
@@ -82,7 +82,7 @@ displayNewBoardPosts() {
           <article class="post">
             <div class="news-container">
             <span class="news-category">
-                <a href={'https://sleepy-dawn-59018.herokuapp.com/users/' + boardPost.user_id}> 
+                <a href={'https://fake-reddit-app.herokuapp.com/users/' + boardPost.user_id}> 
                 <img src={boardPost.user_picture} class="author-image" alt="" /><br />        
                   {boardPost.authored_by} 
                 </a>
@@ -134,7 +134,7 @@ login() {
   </div>
               </div>
               <div class="modal-footer">
-                <a href="https://sleepy-dawn-59018.herokuapp.com"><button type="button" class="btn btn-secondary" data-dismiss="modal">Back to Fake Reddit (Signup)</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
+                <a href="https://fake-reddit-app.herokuapp.com"><button type="button" class="btn btn-secondary" data-dismiss="modal">Back to Fake Reddit (Signup)</button></a>&nbsp;&nbsp;&nbsp;&nbsp;
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" onClick={() => { this.continueAnyway() }}>Continue Anway</button>
               </div>
             </div>
@@ -158,13 +158,13 @@ componentWillMount() {
  }
 
 fetch() {
-  Axios.get('https://sleepy-dawn-59018.herokuapp.com/api/board_posts').then(response => {
+  Axios.get('https://fake-reddit-app.herokuapp.com/api/board_posts').then(response => {
     this.setState({
       boardPosts: response.data.reverse(),
     });  
  });
   if(this.state.isLoggedin == true && this.state.isGuest == false) {
-    Axios.get('https://sleepy-dawn-59018.herokuapp.com/api/users/' + localStorage.getItem('current_user_id')).then(response => {
+    Axios.get('https://fake-reddit-app.herokuapp.com/api/users/' + localStorage.getItem('current_user_id')).then(response => {
       this.setState({
         user: response.data,
       });
@@ -190,7 +190,7 @@ fetch() {
 
         <div class="col-sm-6">
           <ul class="topbar-menu">
-            <li><a href="https://sleepy-dawn-59018.herokuapp.com">Return to Fake Reddit</a></li>
+            <li><a href="https://fake-reddit-app.herokuapp.com">Return to Fake Reddit</a></li>
           </ul>
         </div>
 
@@ -233,8 +233,8 @@ fetch() {
       {/* <!-- Collect the nav links, forms, and other content for toggling --> */}
       <div class="collapse navbar-collapse" id="amalia-navbar-collapse">
         <ul class="nav navbar-nav">
-            <li class={(this.state.isGuest ? 'hidden' : 'cta')}><a href={'https://sleepy-dawn-59018.herokuapp.com/users/' + this.state.user.id}>My Profile</a></li>
-            <li class={(this.state.isGuest ? 'hidden' : 'cta')} onClick={() => { this.logout() }}><a href="https://sleepy-dawn-59018.herokuapp.com/logout">Logout</a></li>
+            <li class={(this.state.isGuest ? 'hidden' : 'cta')}><a href={'https://fake-reddit-app.herokuapp.com/users/' + this.state.user.id}>My Profile</a></li>
+            <li class={(this.state.isGuest ? 'hidden' : 'cta')} onClick={() => { this.logout() }}><a href="https://fake-reddit-app.herokuapp.com/logout">Logout</a></li>
           <li class={(this.state.isGuest ? 'cta' : 'hidden')} onClick={() => { this.setState({ isGuest: false }) }}><a href='/'>Login</a></li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Github <span class="caret"></span></a>
@@ -274,7 +274,7 @@ fetch() {
                   <div class="news-container">
                   <span class="news-category">
                     
-                      <a href={'https://sleepy-dawn-59018.herokuapp.com/users/' + boardPost.user_id}>
+                      <a href={'https://fake-reddit-app.herokuapp.com/users/' + boardPost.user_id}>
                         
                       <img src={boardPost.user_picture} class="author-image" alt="" /><br />  
                         {boardPost.authored_by} 
