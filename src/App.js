@@ -1,5 +1,6 @@
 import React from 'react';
 import Axios from 'axios';
+import moment from 'moment';
 
 class App extends React.Component {
 
@@ -18,6 +19,10 @@ class App extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
     this.deleteBoardPost = this.deleteBoardPost.bind(this);
+}
+
+relativeDate(date) {
+  return moment(date).fromNow();
 }
 
 handleChange(event) {
@@ -65,10 +70,12 @@ deleteBoardPost(post, i) {
 
 deleteButton(post, i) {
   if(localStorage.getItem('current_user_id') == post.user_id) {
-    return (<div class="news-footer">
-    <button value="Delete" class="btn btn-danger"
-    onClick={() => { this.deleteBoardPost(post, i) }} />
-    </div>);
+    return (
+      <div class="news-footer">
+      <button value="Delete" class="btn btn-danger"
+      onClick={() => { this.deleteBoardPost(post, i) }}>Delete Post</button>
+      </div>
+    );
   } else {
     return null;
   }
@@ -205,7 +212,7 @@ fetch() {
       <div class="row">
 
         <div class="col-sm-12">
-          <h1 class="site-title"><a href="/">Fake Reddit <span class="hvr-wobble-vertical">📍</span> board</a><span>.</span> <span class="hvr-wobble-vertical">🐋</span></h1>
+          <h1 class="site-title"><a href="/">Fake Reddit <span class="hvr-wobble-vertical" role="img" aria-label="pin">📍</span> board</a><span>.</span> <span class="hvr-wobble-vertical">🐋</span></h1>
         </div>
         {/* <!-- .col-sm-6 --> */}
 
@@ -282,12 +289,13 @@ fetch() {
   
                   </span>
                   <br />
-                    <span class="news-date">{boardPost.created_at}</span>
+                    <span class="news-date">{this.relativeDate(boardPost.created_at)}</span>
                       <div class="news-entry">
                         <p>{boardPost.text}</p>
+                        {this.deleteButton(boardPost, i)}
                       </div>
                   </div>
-                  {this.deleteButton(boardPost, i)}            
+                           
                 </article>
               </div>
             ))}
@@ -322,6 +330,7 @@ fetch() {
    )
  }
 
+ 
 
   render() {
     if(this.state.isLoggedIn || this.state.isGuest) {
