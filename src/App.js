@@ -250,6 +250,13 @@ fetch() {
               <li><a href="https://github.com/benmfoster/fake_reddit">Backend Repository (Ruby on Rails)</a></li>
             </ul>
           </li> 
+          <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">More Apps <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="https://bit-better.herokuapp.com">Bit Better (React.js)</a></li>
+                <li><a href="https://singing-glass.herokuapp.com">singing glass (sound installation)</a></li>
+              </ul>
+            </li>
           <li class="cta"><a href="https://benmfoster.github.io">About Me</a></li>
         </ul>
         {/* <!-- .navbar-nav --> */}
@@ -264,7 +271,7 @@ fetch() {
       <div class="row">
 
         
-        <div class="col-md-8 col-md-offset-2">
+        <div class="col-md-6 col-md-offset-2">
           <div class="row">
           <form onSubmit={this.handleSubmit}>
               <textarea type="text" class="input-lg form-control" rows="10" placeholder="Consume the internet. " name="boardPostText" value={this.state.boardPostText} onChange={this.handleChange} />
@@ -315,7 +322,8 @@ fetch() {
       <div class="row">
 
         <div class="col-md-4">
-          <h3>Fake Reddit<span>.</span></h3>
+          <h3>Fake Reddit<span>. Board</span></h3>
+          <p class="face">consume the internet.</p>
         </div>
         {/* <!-- .col-md-4 --> */}
 
